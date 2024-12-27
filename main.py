@@ -1,7 +1,16 @@
 import argparse
 import pandas as pd
+import logging
 from datetime import datetime 
 import sqlite3
+
+## LOGGER
+logging.basicConfig(
+        format="{asctime} - {levelname} - {message}",
+        style="{",
+        datefmt="%Y-%m-%d %H:%M",
+        level=logging.DEBUG
+)
 
 def main(csv_path: str) -> None:
     rows_df = pd.read_csv(csv_path)
@@ -14,8 +23,9 @@ def main(csv_path: str) -> None:
         cursor = connection.cursor()
         cursor.executemany(f'{base_query}(?,?,?)', values_list)
         connection.commit()
+        logging.info('Insertion succesfull')
     except Exception as e:
-        print(e)
+        logging.error(e)
     finally:
         connection.close()
     return
@@ -32,4 +42,4 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
     start = datetime.now()
     main(file_path)
-    print(f'Time elapsed: {datetime.now() - start}')
+    logging.info(f'Time elapsed: {datetime.now() - start}')
