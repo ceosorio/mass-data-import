@@ -1,5 +1,5 @@
 # mass-data-import
-Simple tool to import CSV formatted data into a Postgres database
+Simple tool to import CSV formatted data into a SQLite database
 
 ## To run the program
 
